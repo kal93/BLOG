@@ -1,0 +1,23 @@
+{
+  "name": "posts",
+  "version": "1.0.0",
+  "description": "Posts app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node index.js",
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "posts",
+    "microservices"
+  ],
+  "author": "maaz",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.15"
+  }
+}
