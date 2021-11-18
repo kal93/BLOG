@@ -48,9 +48,11 @@ app.post("/events", (req, res) => {
 app.listen(4002, async () => {
   console.log("Query listening on 4002");
 
-  const res = await axios.get("http://localhost:4005/events").catch((err) => {
-    console.log("An error occurred while accessing event bus store", err);
-  });
+  const res = await axios
+    .get("http://event-bus-srv:4005/events")
+    .catch((err) => {
+      console.log("An error occurred while accessing event bus store", err);
+    });
   try {
     for (let event of res.data) {
       console.log("Processing event:", event.type);

@@ -12,9 +12,23 @@ spec:
          labels:
            app: posts
        spec:
-         containers:
+         containers: # List of containers to use. "-" signifies that is an array.
            - name: posts
-             image: johndoeups/posts-api:0.0.5
+             image: johndoeups/posts-api:latest # name and version of the container to pull or use from docker hun or locally or proxy registry.
              imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-api-clusterip-srv
+spec:
+  selector: # Tell the service to direct incoming traffic to the pod with label of event-bus. See a deployment config named labels in template object above
+    app: posts
+  type: ClusterIP # Cluster IP service. Governs/Establishes inter-pod communications
+  ports:
+    - name: posts-api
+      protocol: TCP
+      port: 4000 # Entry port to the container. Keep it same as targetPort for easier understanding.
+      targetPort: 4000 # This is a port being listened on in the container. In this case posts node.js app port.
 
 

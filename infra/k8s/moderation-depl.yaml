@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment # Spins up and container and wraps it in a pod
+metadata:
+    name: moderation-depl
+spec:
+    replicas: 1 # number of same containers to spin up. A pod can have multiple containers.
+    selector:
+      matchLabels:
+         app: moderation
+    template:
+       metadata:
+         labels:
+           app: moderation
+       spec:
+         containers: # List of containers to use. "-" signifies that is an array.
+           - name: moderation
+             image: johndoeups/moderation:latest # Always get same image.":latest" tag is not working at this time.
+             imagePullPolicy: Always # Always pull from docker hub.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-srv
+spec:
+  selector: # Tell the service to direct incoming traffic to the pod with label of event-bus. See a deployment config named labels in template object above
+    app: moderation
+  type: ClusterIP # Cluster IP service. Governs/Establishes inter-pod communications
+  ports:
+    - name: moderation
+      protocol: TCP
+      port: 4003 # Entry port to the container. Keep it same as targetPort for easier understanding.
+      targetPort: 4003 # This is a port being listened on in the container. In this case moderation node.js app port.
