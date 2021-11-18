@@ -16,15 +16,15 @@ app.post("/events", (req, res) => {
     .catch((err) => {
       console.log("Crashed at 4000", err);
     });
-  // axios.post("http://localhost:4001/events", event).catch((err) => {
-  //   console.log("Crashed at 4001", err);
-  // });
-  // axios.post("http://localhost:4002/events", event).catch((err) => {
-  //   console.log("Crashed at 4002", err);
-  // });
-  // axios.post("http://localhost:4003/events", event).catch((err) => {
-  //   console.log("Crashed at 4003", err);
-  // });
+  axios.post("http://comments-srv:4001/events", event).catch((err) => {
+    console.log("Crashed at 4001", err);
+  });
+  axios.post("http://query-srv:4002/events", event).catch((err) => {
+    console.log("Crashed at 4002", err);
+  });
+  axios.post("http://moderation-srv:4003/events", event).catch((err) => {
+    console.log("Crashed at 4003", err);
+  });
   res.send({ status: "OK" });
 });
 
