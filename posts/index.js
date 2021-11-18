@@ -10,11 +10,12 @@ app.use(cors());
 
 const posts = {};
 
+// below endpoint is only for testing. Actual GET /post in in query app
 app.get("/posts", (req, res) => {
   res.send(posts);
 });
 
-app.post("/posts", async (req, res) => {
+app.post("/posts/create", async (req, res) => {
   const id = randomBytes(4).toString("hex");
   const { title } = req.body;
   posts[id] = { id, title };
