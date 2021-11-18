@@ -23,7 +23,7 @@ metadata:
   name: comments-srv
 spec:
   selector: # Tell the service to direct incoming traffic to the pod with label of event-bus. See a deployment config named labels in template object above
-    app: event-bus
+    app: comments
   type: ClusterIP # Cluster IP service. Governs/Establishes inter-pod communications
   ports:
     - name: comments
