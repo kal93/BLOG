@@ -1,0 +1,63 @@
+# Used only for dev ENV.Watches the config files in infra/k8s directory and deploys automatically.
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+  # Setting push to false will not push to docker hub.This may conflict with imagePullPolicy:Always in container spec. 
+  # set push to true to push to dockerhub or remove imagePullPolicy:Always from container specs in depl config files.
+    push: false
+  artifacts: # Tell skaffol to maintain something.Meaning some pod in client dir.Whenever something changes in this pod take it copy
+  # it into the file direclty without rebuilding the entire image.Anything that falls outside the files being watched in sync config
+  # will rebuild the entire image.
+    - image: johndoeups/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: johndoeups/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: johndoeups/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: johndoeups/moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: johndoeups/posts-api
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: johndoeups/query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
